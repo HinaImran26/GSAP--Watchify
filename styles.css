@@ -8,7 +8,7 @@
 body,
 html {
     height: 100%;
-    width: 100%
+    width: 100%;
 }
 
 body {
@@ -51,7 +51,7 @@ main {
 #section2,
 #section3 {
     width: 100%;
-    height: 100%;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -142,12 +142,7 @@ main {
     pointer-events: none;
 }
 
-/* small responsive tweak */
-@media (max-width:600px) {
-    .reflect {
-        font-size: 36px;
-    }
-}
+
 
 p {
     color: white;
@@ -156,7 +151,7 @@ p {
     margin-top: 20px;
 }
 
-/* From Uiverse.io by TCdesign-dev */
+
 .button-name {
     align-items: center;
     appearance: none;
@@ -258,102 +253,261 @@ p {
 }
 
 .footer {
-  background: #111;
-  color: #fff;
-  padding: 40px 20px 20px;
-  font-family: sans-serif;
+    background: #111;
+    color: #fff;
+    padding: 40px 20px 20px;
+    font-family: sans-serif;
+
 }
 
 .footer-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 30px;
-  max-width: 1200px;
-  margin: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: auto;
 }
 
 .footer h2,
 .footer h4 {
-  margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 .footer p,
 .footer a {
-  font-size: 14px;
-  color: #bbb;
-  text-decoration: none;
+    font-size: 14px;
+    color: #bbb;
+    text-decoration: none;
 }
 
 .footer a:hover {
-  color: #fff;
+    color: #fff;
 }
 
 .footer-bottom {
-  text-align: center;
-  border-top: 1px solid #333;
-  margin-top: 30px;
-  padding-top: 15px;
-  font-size: 13px;
-  color: #777;
+    text-align: center;
+    border-top: 1px solid #333;
+    margin-top: 30px;
+    padding-top: 15px;
+    font-size: 13px;
+    color: #777;
 }
 
 .footer-social .social-icons {
-  display: flex;
-  gap: 15px;
-  margin-top: 10px;
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
 }
 
 .footer-social .social-icons a {
-  color: #bbb;
-  font-size: 18px;
-  transition: color 0.3s ease;
+    color: #bbb;
+    font-size: 18px;
+    transition: color 0.3s ease;
 }
 
 .footer-social .social-icons a:hover {
-  color: #fff;
+    color: #fff;
 }
 
 
 .site-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 25px 45px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 25px 45px;
     background-color: #181818;
-  color: #fff;
+    color: #fff;
 }
 
 .logo a {
-  font-size: 30px;
-  font-weight: bold;
-  text-decoration: none;
-  color: #fff;
+    font-size: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #fff;
 }
 
 .nav-links {
-  display: flex;
-  gap: 25px;
+    display: flex;
+    gap: 25px;
 
 }
 
 .nav-links a {
-  text-decoration: none;
-  color: #bbb;
-  font-weight: 500;
-  transition: color 0.3s ease;
+    text-decoration: none;
+    color: #bbb;
+    font-weight: 500;
+    transition: color 0.3s ease;
 }
 
 .nav-links a:hover {
-  color: #fff;
+    color: #fff;
 }
 
 
 .header-social a {
-  color: #bbb;
-  font-size: 16px;
-  transition: color 0.3s ease;
+    color: #bbb;
+    font-size: 16px;
+    transition: color 0.3s ease;
 }
 
 .header-social a:hover {
-  color: #fff;
+    color: #fff;
+}
+
+/* =====================
+   RESPONSIVE STYLES
+===================== */
+
+/* Tablets (<= 1024px) */
+@media (max-width: 1024px) {
+    .reflect {
+        font-size: 80px;
+    }
+
+    .reflect2 {
+        font-size: 60px;
+    }
+
+    .reflect3 {
+        font-size: 40px;
+    }
+
+    .cards-container {
+        width: 90%;
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .card {
+        width: 45%;
+        height: auto;
+    }
+
+    .site-header {
+        padding: 20px 30px;
+    }
+
+    .logo a {
+        font-size: 24px;
+    }
+}
+
+@media(max-width:650px){
+    .nav-links{
+        display: none;
+    }
+}
+
+/* Mobiles (<= 768px) */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        padding: 1rem 2rem;
+        text-align: center;
+    }
+
+    .left,
+    .right {
+        width: 100%;
+    }
+
+    .cards-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        width: 80%;
+        max-width: 320px;
+    }
+
+    .site-header {
+        /* flex-direction: column;
+        gap: 15px; */
+    }
+
+    .nav-links {
+        /* flex-direction: column;
+        gap: 15px;
+        text-align: center; */
+    }
+
+    .reflect {
+        font-size: 50px;
+    }
+}
+
+/* Small Mobiles (<= 480px) */
+@media (max-width: 480px) {
+    .reflect {
+        font-size: 32px !important;
+    }
+
+    .reflect2 {
+        font-size: 28px;
+    }
+
+    .reflect3 {
+        font-size: 22px;
+    }
+
+    .cards-container {
+        width: 100%;
+        gap: 15px;
+    }
+
+    .card {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .card img {
+        width: 180px;
+        height: 180px;
+    }
+
+    .logo a {
+        font-size: 20px;
+    }
+
+    .site-header {
+        padding: 15px;
+    }
+}
+
+/* small responsive tweak */
+@media (max-width:768px) {
+    .reflect {
+        font-size: 65px;
+    }
+
+    #section1,
+    #section2 {
+        padding: 0 20px !important;
+    }
+
+    .card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #section1 {
+        display: flex;
+        align-items: center;
+    }
+
+    .reflect2 {
+        text-align: center;
+    }
+
+    #section3 {
+        padding-bottom: 30px;
+    }
+
+    .left{
+        align-items:center ;
+    }
 }
