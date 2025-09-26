@@ -511,3 +511,16 @@ p {
         align-items:center ;
     }
 }
+
+
+
+.right{
+    position: relative;
+}
+.watch-target {
+  width: 0;
+  height: 0;
+  position: absolute;
+  top: 50%;  /* adjust where you want the watch to land */
+  left: 100%;
+}

@@ -1,77 +1,91 @@
 window.addEventListener("load", () => {
   gsap.registerPlugin(ScrollTrigger);
 
-  const section0 = document.querySelector("#section0");
-  const section1 = document.querySelector("#section1");
-  const section2 = document.querySelector("#section2");
-  const section3 = document.querySelector("#section3");
+  const mm = gsap.matchMedia();
 
-  const watch = document.querySelector("#watch");
-
-  if (!section0 || !section1 || !section2 || !watch) {
-    console.warn("Missing one of: #section0, #section1, #section2, #watch");
-    return;
-  }
-
-  // --- Distances ---
-  const distanceY1 = section1.offsetTop - section0.offsetTop;
-  const distanceY2 = section2.offsetTop - section1.offsetTop;
-  const distanceY3 = section3.offsetTop - section2.offsetTop;
-
-  // --- Horizontal shift for section1 ---
-  const rightCol1 = section1.querySelector(".right");
-  const targetX1 =
-    rightCol1.getBoundingClientRect().left -
-    watch.getBoundingClientRect().left +
-    -100;
-
-  const targetX2 =
-    ((section2.getBoundingClientRect().left + section2.getBoundingClientRect().right) / 2) -
-    ((watch.getBoundingClientRect().left + watch.getBoundingClientRect().right) / 2);
-
-
-  // Step 0: Intro zoom (before scroll animation kicks in)
+  // common intro animation
   gsap.from("#watch", {
-    scale: 0.2,      
-    opacity: 0,       // fade in
-    duration: 1.5,    // animation length
+    scale: 0.2,
+    opacity: 0,
+    duration: 1.5,
     ease: "power2.out"
   });
 
-  // --- Timeline controlled by ScrollTrigger ---
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: "#section0",
-      start: "top top",
-      end: () => "+=" + (distanceY1 + distanceY2 + distanceY3), // whole scroll distance
-      scrub: true,
-      // markers: true
+  mm.add(
+    {
+      // define breakpoints
+      isDesktop: "(min-width: 1025px)",
+      isTablet: "(min-width: 601px) and (max-width: 1024px)",
+      isMobile: "(max-width: 600px)"
+    },
+    (context) => {
+      let { isDesktop, isTablet, isMobile } = context.conditions;
+
+      const section0 = document.querySelector("#section0");
+      const section1 = document.querySelector("#section1");
+      const section2 = document.querySelector("#section2");
+      const section3 = document.querySelector("#section3");
+      const watch = document.querySelector("#watch");
+
+      // marker for section1 target
+      const marker1 = section1.querySelector(".watch-target");
+      const marker2 = section3.querySelector("#watch-target2");
+
+      function buildTimeline() {
+        const distanceY1 = section1.offsetTop - section0.offsetTop;
+        const distanceY2 = section2.offsetTop - section1.offsetTop;
+        const distanceY3 = section3.offsetTop - section2.offsetTop;
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: "#section0",
+            start: "top top",
+            end: () => "+=" + (distanceY1 + distanceY2 + distanceY3),
+            scrub: true,
+            // markers: true
+          }
+        });
+
+        // Step 1 → move to marker in section1
+        tl.to("#watch", {
+          x: () => (isDesktop ? marker1.offsetLeft - watch.offsetLeft : 0),
+          y: distanceY1,
+          rotation: 90,
+          ease: "none"
+        });
+
+        // Step 2 → move to center of section2
+        tl.to("#watch", {
+          x: () =>
+            (section2.offsetLeft + section2.offsetWidth / 2) -
+            (watch.offsetLeft + watch.offsetWidth / 2),
+          y: "+=" + distanceY2,
+          rotation: 0,
+          ease: "none"
+        });
+
+        // Step 3 → grow in section3
+        tl.to("#watch", {
+          y: () =>
+            (marker2.offsetTop + marker2.offsetHeight) -
+            (watch.offsetTop + watch.offsetHeight),
+          width: isMobile ? "180px" : "250px",
+          height: isMobile ? "180px" : "250px",
+          ease: "none"
+        });
+
+        return tl;
+      }
+
+      let tl = buildTimeline();
+
+      // rebuild timeline on refresh
+      ScrollTrigger.addEventListener("refreshInit", () => {
+        if (tl) tl.kill();
+        tl = buildTimeline();
+      });
+
+      ScrollTrigger.refresh();
     }
-  });
-
-  // Step 1: move from section0 → section1
-  tl.to("#watch", {
-    x: targetX1,
-    y: distanceY1,
-    rotation: 90,
-    ease: "none"
-  });
-
-  // Step 2: move from section1 → section2
-  tl.to("#watch", {
-    x: targetX2,
-    y: "+=" + distanceY2,
-    rotation: 0,
-    ease: "none"
-  });
-
-
-  // Step 3: move from section2 → section3
-  tl.to("#watch", {
-    // x: targetX2,
-    y: "+=" + distanceY3,
-    width: "250px",
-    height: "250px",
-    ease: "none"
-  });
+  );
 });
